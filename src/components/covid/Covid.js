@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Covid = () => {
-    const [stats, setStats] = useState({})
     const [globalStats, setGlobalStats] = useState({
         totalConfirmedCases: 0,
         newlyConfirmedCases: 0,
@@ -12,6 +11,13 @@ const Covid = () => {
         newlyRecoveredCases: 0
     })
     const [updatedDateTime, setUpdatedDateTime] = useState('')
+    const [search, setSearch] = useState('')
+    const [country, setCountry] = useState('global')
+    const url = `/coronavirus/stats/${country}`
+
+    const chooseCountry = () => {
+        search === '' ? setCountry('global') : setCountry(search)
+    }
 
     const getCovidStats = async () => {
         let config = {
@@ -21,9 +27,8 @@ const Covid = () => {
             }
         }
 
-        const result = await axios.get(`/coronavirus/stats/global`, config)
-        console.log(result.data)
-        setStats(result.data)
+        const result = await axios.get(url, config)
+        console.log(result.data.stats.breakdowns[0].location)
         setGlobalStats({
             totalConfirmedCases: result.data.stats.totalConfirmedCases,
             newlyConfirmedCases: result.data.stats.newlyConfirmedCases,
@@ -37,11 +42,15 @@ const Covid = () => {
 
     useEffect(() => {
         getCovidStats()
-    }, [])
+    }, [country])
 
     return (
         <div>
             <h4>Get Covid Stats</h4>
+
+            <input style={{ width: '50%' }} type='text' name='search' placeholder='e.g., US, JP, TH' onChange={e => setSearch(e.target.value)} />
+            <button className="waves-effect waves-light btn" onClick={chooseCountry}>search</button>
+
             <p>Total Confirmed Cases : {globalStats.totalConfirmedCases}</p>
             <p>Newly Confirmed Cases : {globalStats.newlyConfirmedCases}</p>
             <p>Total Deaths : {globalStats.totalDeaths}</p>
