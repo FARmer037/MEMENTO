@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <nav className='nav-wrapper grey darken-3'>
             <div className='container'>
-                <Link to='/' className='brand-logo'>Traveling in the Covid era</Link>
+                <Link to='/' className='brand-logo'>MEMENTO</Link>
                 <SignedInLinks />
                 {/* <SignedOutLinks /> */}
             </div>

@@ -1,0 +1,32 @@
+.covid-card {
+    width: 300px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+.title {
+    background-color: rgb(134, 134, 134);
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    width: 100%;
+}
+
+.value {
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    flex: 2;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    width: 100%;
+}

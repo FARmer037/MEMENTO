@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import './Covid.css'
+import CovidCard from './CovidCard'
 
 const Covid = () => {
     const [globalStats, setGlobalStats] = useState({
@@ -45,18 +47,21 @@ const Covid = () => {
     }, [country])
 
     return (
-        <div>
+        <div className='covid-container'>
             <h4>Get Covid Stats</h4>
+            <div className='search'>
+                <input style={{ width: '50%' }} type='text' name='search' placeholder='e.g., US, JP, TH' onChange={e => setSearch(e.target.value)} />
+                <button className="waves-effect waves-light btn" onClick={chooseCountry}>search</button>
+            </div>
 
-            <input style={{ width: '50%' }} type='text' name='search' placeholder='e.g., US, JP, TH' onChange={e => setSearch(e.target.value)} />
-            <button className="waves-effect waves-light btn" onClick={chooseCountry}>search</button>
-
-            <p>Total Confirmed Cases : {globalStats.totalConfirmedCases}</p>
-            <p>Newly Confirmed Cases : {globalStats.newlyConfirmedCases}</p>
-            <p>Total Deaths : {globalStats.totalDeaths}</p>
-            <p>New Deaths : {globalStats.newDeaths}</p>
-            <p>Total Recovered Cases : {globalStats.totalRecoveredCases}</p>
-            <p>Newly Recovered Cases : {globalStats.newlyRecoveredCases}</p>
+            <div className='show-stats'>
+                <CovidCard title='Total Confirmed Cases' value={globalStats.totalConfirmedCases} />
+                <CovidCard title='Newly Confirmed Cases' value={globalStats.newlyConfirmedCases} />
+                <CovidCard title='Total Deaths' value={globalStats.totalDeaths} />
+                <CovidCard title='New Deaths' value={globalStats.newDeaths} />
+                <CovidCard title='Total Recovered Cases' value={globalStats.totalRecoveredCases} />
+                <CovidCard title='Newly Recovered Cases' value={globalStats.newlyRecoveredCases} />
+            </div>
 
             <p>Update Time : {updatedDateTime}</p>
         </div>
