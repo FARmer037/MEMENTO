@@ -1,12 +1,15 @@
 import React from 'react';
-import Covid from './components/Covid';
+import { BrowserRouter } from 'react-router-dom'
+import Covid from './components/covid/Covid';
+import Navbar from './components/layout/Navbar';
 
 function App() {
   return (
-    <div>
-      <h1>Traveling in the Covid era</h1>
-      <Covid />
-    </div>
+    <BrowserRouter>
+      <div>
+        <Navbar />
+      </div>
+    </BrowserRouter>
   );
 }
 
