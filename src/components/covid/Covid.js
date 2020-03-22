@@ -14,12 +14,10 @@ const Covid = () => {
     })
     const [updatedDateTime, setUpdatedDateTime] = useState('')
     const [search, setSearch] = useState('')
-    const [country, setCountry] = useState('global')
-    const url = `/coronavirus/stats/${country}`
+    const [countryCode, setCountryCode] = useState('global')
+    const [countries, setCountries] = useState([])
 
-    const chooseCountry = () => {
-        search === '' ? setCountry('global') : setCountry(search)
-    }
+    const url = `/coronavirus/stats/${countryCode}`
 
     const getCovidStats = async () => {
         let config = {
@@ -30,7 +28,7 @@ const Covid = () => {
         }
 
         const result = await axios.get(url, config)
-        console.log(result.data.stats.breakdowns[0].location)
+        // console.log(result.data)
         setGlobalStats({
             totalConfirmedCases: result.data.stats.totalConfirmedCases,
             newlyConfirmedCases: result.data.stats.newlyConfirmedCases,
@@ -42,9 +40,27 @@ const Covid = () => {
         setUpdatedDateTime(result.data.updatedDateTime)
     }
 
+    const getCountryCode = async () => {
+        const result = await axios.get(`http://restcountries.eu/rest/v2/`)
+        // console.log(result.data)
+        setCountries(result.data)
+    }
+
+    const chooseCountry = () => {
+        const country = countries.filter(c => c.name === search);
+        // console.log(...c)
+        covertToCountryCode(...country)
+    }
+
+    const covertToCountryCode = (country) => {
+        // console.log(c.alpha2Code)
+        search === '' ? setCountryCode('global') : setCountryCode(country.alpha2Code)
+    }
+
     useEffect(() => {
         getCovidStats()
-    }, [country])
+        getCountryCode()
+    }, [countryCode])
 
     return (
         <div className='covid-container'>
