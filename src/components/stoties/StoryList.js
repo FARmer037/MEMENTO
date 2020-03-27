@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import StorySummary from './StorySummary'
 import { firestore } from '../../index'
 import moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux'
 
 const StoryList = () => {
-    const [stories, setStories] = useState([])
+    const stories = useSelector(state => state.story)
+    const dispatch = useDispatch()
 
     const retriveData = () => {
         firestore.collection("stories").onSnapshot((snapshot) => {
@@ -14,7 +17,8 @@ const StoryList = () => {
                 console.log(author, createAt, title)
                 return { title, author, createAt: moment(d.data().createAt.toDate()).format('LLL') }
             })
-            setStories(newStory)
+            console.log('new', newStory)
+            dispatch({ type: 'GET_STORY', stories: newStory })
         })
     }
 
@@ -26,7 +30,9 @@ const StoryList = () => {
         <div className='project-list section'>
             {
                 stories.map((story, index) => (
-                    <StorySummary key={index} title={story.title} author={story.author} createAt={story.createAt} />
+                    <Link to={'/story/' + story.title}>
+                        <StorySummary key={index} title={story.title} author={story.author} createAt={story.createAt} />
+                    </Link>
                 ))
             }
         </div>

@@ -7,7 +7,7 @@ const StoryDetails = (props) => {
         <div className='container section project-details'>
             <div className='card z-depth-0'>
                 <div className='card-content'>
-                    <span className='card-title'>Project Title - {id}</span>
+                    <span className='card-title'>{id}</span>
                     <p>Incididunt mollit cillum id nostrud do fugiat eu sint consequat aute Lorem nulla officia. Consectetur reprehenderit exercitation consequat enim id laboris voluptate. Culpa ad aute et ex dolore velit exercitation aliquip magna culpa sint reprehenderit ipsum non. Pariatur minim fugiat incididunt excepteur excepteur tempor incididunt ex irure incididunt do culpa laboris do.</p>
                 </div>
                 <div className='card-action gret lighten-4 grey-text'>
