@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Covid.css'
 import CovidCard from './CovidCard'
+import { SUBSCRIPTION_KEY } from '../../environment'
 
 const Covid = () => {
     const [globalStats, setGlobalStats] = useState({
@@ -23,7 +24,7 @@ const Covid = () => {
         let config = {
             headers: {
                 "Cache-Control": "no-cache",
-                "Subscription-Key": ""
+                "Subscription-Key": SUBSCRIPTION_KEY
             }
         }
 

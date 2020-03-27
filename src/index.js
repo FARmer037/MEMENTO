@@ -3,6 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import { config } from './environment';
+
+if (firebase.apps.length === 0)
+    firebase.initializeApp(config)
+firebase.firestore().settings({ timestampsInSnapshots: true })
+
+export const firestore = firebase.firestore()
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
