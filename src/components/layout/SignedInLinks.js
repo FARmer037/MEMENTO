@@ -1,14 +1,19 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Menu } from 'antd';
 
 const SignedInLinks = () => {
     return (
-        <ul className='right'>
-            <li><NavLink to='/create'>New Story</NavLink></li>
-            <li><NavLink to='/covid'>Covid-19 Stats</NavLink></li>
-            <li><NavLink to='/'>Logout</NavLink></li>
-            <li><NavLink to='/' className='btn btn-floating'>FM</NavLink></li>
-        </ul>
+        <Menu mode="horizontal">
+            <Menu.Item >
+                <a href="/create">New Story</a>
+            </Menu.Item>
+            <Menu.Item >
+                <a href="/covid">Covid-19 Stats</a>
+            </Menu.Item>
+            <Menu.Item >
+                <a href="/">Logout</a>
+            </Menu.Item>
+        </Menu>
     )
 }
 

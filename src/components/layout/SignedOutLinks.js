@@ -1,12 +1,16 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Menu } from 'antd';
 
 const SignedOutLinks = () => {
     return (
-        <ul className='right'>
-            <li><NavLink to='/'>Singin</NavLink></li>
-            <li><NavLink to='/'>Singup</NavLink></li>
-        </ul>
+        <Menu mode="horizontal">
+            <Menu.Item key="mail">
+                <a href="/">Signin</a>
+            </Menu.Item>
+            <Menu.Item key="app">
+                <a href="/">Signup</a>
+            </Menu.Item>
+        </Menu>
     )
 }
 

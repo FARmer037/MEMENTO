@@ -3,6 +3,10 @@ import axios from 'axios'
 import './Covid.css'
 import CovidCard from './CovidCard'
 import { SUBSCRIPTION_KEY } from '../../environment'
+import { Input, Row, Col, Typography } from 'antd';
+
+const { Title } = Typography;
+const { Search } = Input;
 
 const Covid = () => {
     const [globalStats, setGlobalStats] = useState({
@@ -48,6 +52,7 @@ const Covid = () => {
     }
 
     const chooseCountry = () => {
+        // console.log(search)
         const country = countries.filter(c => c.name === search);
         // console.log(...c)
         covertToCountryCode(...country)
@@ -64,24 +69,31 @@ const Covid = () => {
     }, [countryCode])
 
     return (
-        <div className='covid-container'>
-            <h4>Get Covid Stats</h4>
-            <div className='search'>
-                <input style={{ width: '50%' }} type='text' name='search' placeholder='e.g., US, JP, TH' onChange={e => setSearch(e.target.value)} />
-                <button className="waves-effect waves-light btn" onClick={chooseCountry}>search</button>
-            </div>
-
-            <div className='show-stats'>
-                <CovidCard title='Total Confirmed Cases' value={globalStats.totalConfirmedCases} />
-                <CovidCard title='Newly Confirmed Cases' value={globalStats.newlyConfirmedCases} />
-                <CovidCard title='Total Deaths' value={globalStats.totalDeaths} />
-                <CovidCard title='New Deaths' value={globalStats.newDeaths} />
-                <CovidCard title='Total Recovered Cases' value={globalStats.totalRecoveredCases} />
-                <CovidCard title='Newly Recovered Cases' value={globalStats.newlyRecoveredCases} />
-            </div>
-
-            <p>Update Time : {updatedDateTime}</p>
-        </div>
+        <>
+            <Row>
+                <Col span={12} offset={6} >
+                    <Title style={{ textAlign: 'center', margin: '20px 0' }}>Create Story</Title>
+                    <Search placeholder="e.g. Thailand, Japan, Italy" onChange={e => setSearch(e.target.value)} onSearch={chooseCountry} enterButton />
+                </Col>
+            </Row>
+            <Row>
+                <Col span={12} offset={6} >
+                    <div className='show-stats'>
+                        <CovidCard title='Total Confirmed Cases' value={globalStats.totalConfirmedCases} />
+                        <CovidCard title='Newly Confirmed Cases' value={globalStats.newlyConfirmedCases} />
+                        <CovidCard title='Total Deaths' value={globalStats.totalDeaths} />
+                        <CovidCard title='New Deaths' value={globalStats.newDeaths} />
+                        <CovidCard title='Total Recovered Cases' value={globalStats.totalRecoveredCases} />
+                        <CovidCard title='Newly Recovered Cases' value={globalStats.newlyRecoveredCases} />
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={12} offset={6} style={{ textAlign: 'center' }}>
+                    <p>Update Time : {updatedDateTime}</p>
+                </Col>
+            </Row>
+        </>
     )
 }
 

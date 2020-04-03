@@ -15,7 +15,5 @@
 .show-stats {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    width: 50%;
-    min-height: 80vh;
+    justify-content: space-between;
 }

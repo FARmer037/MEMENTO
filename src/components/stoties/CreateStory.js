@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
 import { firestore } from '../../index'
 import { useDispatch, useSelector } from 'react-redux'
+import { Row, Col, Form, Input, Button, DatePicker, TimePicker, Typography } from 'antd';
+import moment from 'moment'
+
+const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 17 },
+}
+
+const tailLayout = {
+    wrapperCol: { offset: 11, span: 12 },
+}
+
+const { Title } = Typography;
 
 const CreateStory = () => {
     const [author, setAuthor] = useState('FARmer037')
 
     const dispatch = useDispatch()
     const form = useSelector(state => state.form)
-    const story = useSelector(state => state.story)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -16,23 +28,76 @@ const CreateStory = () => {
         dispatch({ type: 'RESET_STORY', story: '' })
     }
 
+    const onFinish = values => {
+        console.log('Success:', values);
+    };
+
+    const onFinishFailed = errorInfo => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const onChange = (date, dateString) => {
+        console.log(dateString);
+    }
+
     return (
-        <div className='container'>
-            <form className='white' onSubmit={handleSubmit}>
-                <h5 className='grey-text text-darken-3'>Create new stroy</h5>
-                <div className='input-field'>
-                    <label htmlFor='title'>Title</label>
-                    <input type='text' id='title' value={form.title} onChange={e => dispatch({ type: 'CHANGE_TITLE', title: e.target.value })} />
-                </div>
-                <div className='input-field'>
-                    <label htmlFor='story'>Story</label>
-                    <textarea id='story' className='materialize-textarea' value={form.story} onChange={e => dispatch({ type: 'CHANGE_STORY', story: e.target.value })} />
-                </div>
-                <div className='input-field'>
-                    <button className='btn z-depth-0'>Create</button>
-                </div>
-            </form>
-        </div>
+        <Row>
+            <Col span={16} offset={4}>
+                <Title style={{ textAlign: 'center', margin: '20px 0' }}>Create Story</Title>
+                <Form
+                    {...layout}
+                    name="basic"
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                >
+                    <Form.Item
+                        label="Task"
+                        name="task"
+                        rules={[{ required: true, message: 'Please input a task!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Location"
+                        name="location"
+                        rules={[{ required: true, message: 'Please input a task!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Date"
+                        name="date"
+                        rules={[{ required: true, message: 'Please input date!' }]}
+                    >
+                        <DatePicker style={{ width: '100%' }} onChange={onChange} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Start Time"
+                        name="start-time"
+                        rules={[{ required: true, message: 'Please input date!' }]}
+                    >
+                        <TimePicker style={{ width: '100%' }} onChange={onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="End Time"
+                        name="end-time"
+                        rules={[{ required: true, message: 'Please input date!' }]}
+                    >
+                        <TimePicker style={{ width: '100%' }} onChange={onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+                    </Form.Item>
+
+                    <Form.Item {...tailLayout}>
+                        <Button type="primary" htmlType="submit">
+                            Create
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Col>
+        </Row>
     )
 }
 

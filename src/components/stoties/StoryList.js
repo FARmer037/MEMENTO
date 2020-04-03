@@ -13,9 +13,9 @@ const StoryList = () => {
         firestore.collection("stories").onSnapshot((snapshot) => {
             let newStory = snapshot.docs.map(d => {
                 // console.log(d.data())
-                const { title, author, createAt } = d.data()
-                console.log(author, createAt, title)
-                return { title, author, createAt: moment(d.data().createAt.toDate()).format('LLL') }
+                const { title, story, author, createAt } = d.data()
+                console.log(author, story, createAt, title)
+                return { title, story, author, createAt: moment(d.data().createAt.toDate()).format('LLL') }
             })
             console.log('new', newStory)
             dispatch({ type: 'GET_STORY', stories: newStory })
