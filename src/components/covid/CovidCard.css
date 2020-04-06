@@ -1,18 +1,18 @@
 .covid-card {
     width: 300px;
     height: 250px;
-    border-radius: 50%;
-    background-color: red;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     margin: 20px 0px;
+    overflow: hidden;
 }
 
 .title {
-    background-color: rgb(134, 134, 134);
-    color: rgb(255, 255, 255);
+    background-color: #0050b3;
+    color: #e6f7ff;
     display: flex;
     flex: 1;
     justify-content: center;
@@ -22,7 +22,7 @@
 }
 
 .value {
-    background-color: rgb(240, 240, 240);
+    background-color: #e6f7ff;
     display: flex;
     flex: 2;
     justify-content: center;

@@ -60,7 +60,7 @@ const Covid = () => {
 
     const covertToCountryCode = (country) => {
         // console.log(c.alpha2Code)
-        search === '' ? setCountryCode('global') : setCountryCode(country.alpha2Code)
+        !country || search === '' ? setCountryCode('global') : setCountryCode(country.alpha2Code)
     }
 
     useEffect(() => {
@@ -72,7 +72,7 @@ const Covid = () => {
         <>
             <Row>
                 <Col span={12} offset={6} >
-                    <Title style={{ textAlign: 'center', margin: '20px 0' }}>Create Story</Title>
+                    <Title style={{ textAlign: 'center', margin: '20px 0' }}>Covid-19 Stats</Title>
                     <Search placeholder="e.g. Thailand, Japan, Italy" onChange={e => setSearch(e.target.value)} onSearch={chooseCountry} enterButton />
                 </Col>
             </Row>
@@ -82,7 +82,7 @@ const Covid = () => {
                         <CovidCard title='Total Confirmed Cases' value={globalStats.totalConfirmedCases} />
                         <CovidCard title='Newly Confirmed Cases' value={globalStats.newlyConfirmedCases} />
                         <CovidCard title='Total Deaths' value={globalStats.totalDeaths} />
-                        <CovidCard title='New Deaths' value={globalStats.newDeaths} />
+                        <CovidCard title='Newly Deaths' value={globalStats.newDeaths} />
                         <CovidCard title='Total Recovered Cases' value={globalStats.totalRecoveredCases} />
                         <CovidCard title='Newly Recovered Cases' value={globalStats.newlyRecoveredCases} />
                     </div>

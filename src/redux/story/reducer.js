@@ -1,14 +1,18 @@
 const initialForm = {
-    title: '',
-    story: ''
+    task: '',
+    location: '',
+    date: '',
+    startTime: '',
+    endTime: ''
 }
 
 export const formReducer = (data = initialForm, action) => {
     switch(action.type) {
-        case 'CHANGE_TITLE': return {...data, title: action.title}
-        case 'CHANGE_STORY': return {...data, story: action.story}
-        case 'RESET_TITLE': return {...data, title: action.title}
-        case 'RESET_STORY': return {...data, story: action.story}
+        case 'CHANGE_TASK': return {...data, task: action.task}
+        case 'CHANGE_LOCATION': return {...data, location: action.location}
+        case 'CHANGE_DATE': return {...data, date: action.date}
+        case 'CHANGE_START_TIME': return {...data, startTime: action.startTime}
+        case 'CHANGE_END_TIME': return {...data, endTime: action.endTime}
         default: return data
     }
 }
