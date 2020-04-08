@@ -39,6 +39,7 @@ const CreateStory = () => {
         let id = stories.length === 0 ? 1 : stories[stories.length - 1].id + 1
 
         firestore.collection("stories").doc(id + '').set({
+            id,
             task: form.task,
             location: form.location,
             date: form.date,
