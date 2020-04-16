@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Timeline, Typography } from 'antd'
+import { Timeline, Typography, Empty } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons'
 import { firestore } from '../../index'
 
@@ -23,22 +23,34 @@ const Dashboard = () => {
         })
     }
 
+    const showData = () => {
+        if (stories && stories.length) {
+            return (
+                <Timeline mode='left' style={{ margin: '20px 0px' }}>
+                    {
+                        stories.map((story, index) => (
+                            <Timeline.Item key={index} dot={<ClockCircleOutlined onClick={() => console.log(index + 1)} style={{ fontSize: '16px' }} />} label={story.date}>
+                                <Title level={4}>{story.task}</Title>
+                                <p>{story.location}</p>
+                                <p>{story.startTime} to {story.endTime}</p>
+                            </Timeline.Item>
+                        ))
+                    }
+                </Timeline>
+            )
+        } else {
+            return (
+                <Empty style={{ marginTop: '100px' }} />
+            )
+        }
+    }
+
     useEffect(() => {
         retriveData()
     }, [])
 
     return (
-        <Timeline mode='left' style={{ margin: '20px 0px' }}>
-            {
-                stories.map((story, index) => (
-                    <Timeline.Item key={index} dot={<ClockCircleOutlined onClick={() => console.log(index + 1)} style={{ fontSize: '16px' }} />} label={story.date}>
-                        <Title level={4}>{story.task}</Title>
-                        <p>{story.location}</p>
-                        <p>{story.startTime} to {story.endTime}</p>
-                    </Timeline.Item>
-                ))
-            }
-        </Timeline>
+        showData()
     )
 }
 
