@@ -1,7 +1,12 @@
 import React from 'react'
 import { Menu } from 'antd';
+import fire from '../../firebase/fire'
 
 const SignedInLinks = () => {
+    const logout = () => {
+        fire.auth().signOut()
+    }
+
     return (
         <Menu mode="horizontal">
             <Menu.Item >
@@ -10,7 +15,7 @@ const SignedInLinks = () => {
             <Menu.Item >
                 <a href="/covid">Covid-19 Stats</a>
             </Menu.Item>
-            <Menu.Item >
+            <Menu.Item onClick={logout} >
                 <a href="/">Logout</a>
             </Menu.Item>
         </Menu>

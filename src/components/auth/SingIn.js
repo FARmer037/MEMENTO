@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Form, Input, Button, Typography } from 'antd'
+import fire from '../../firebase/fire'
 
 const { Title } = Typography
 
@@ -13,8 +14,18 @@ const tailLayout = {
 }
 
 const SignIn = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const onFinish = values => {
-        console.log('Success:', values);
+        // console.log('Success:', values);
+
+        fire.auth().signInWithEmailAndPassword(email, password).then(u => {
+            console.log(u)
+        }).catch(err => {
+            console.log(err)
+        })
+
     };
 
     const onFinishFailed = errorInfo => {
@@ -43,7 +54,7 @@ const SignIn = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input onChange={e => setEmail(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item
@@ -56,7 +67,7 @@ const SignIn = () => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password onChange={e => setPassword(e.target.value)} />
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
