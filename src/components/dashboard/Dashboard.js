@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Timeline, Typography, Empty } from 'antd'
-import { ClockCircleOutlined } from '@ant-design/icons'
+import { Timeline, Typography, Empty, Button, Row, Col } from 'antd'
+import { ClockCircleOutlined, DownloadOutlined } from '@ant-design/icons'
 import { firestore } from '../../index'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const { Title } = Typography;
 
@@ -23,20 +25,46 @@ const Dashboard = () => {
         })
     }
 
+    const generatePdf = () => {
+        const head = Object.keys(stories[0])
+        const body = stories.map(story => {
+            const values = Object.keys(story).map(key => {
+                return story[key];
+            })
+            return values
+        })
+
+        const doc = new jsPDF()
+        doc.autoTable({
+            head: [head],
+            body: body
+        })
+        doc.save('Timeline.pdf')
+    }
+
     const showData = () => {
         if (stories && stories.length) {
             return (
-                <Timeline mode='left' style={{ margin: '20px 0px' }}>
-                    {
-                        stories.map((story, index) => (
-                            <Timeline.Item key={index} dot={<ClockCircleOutlined onClick={() => console.log(index + 1)} style={{ fontSize: '16px' }} />} label={story.date}>
-                                <Title level={4}>{story.task}</Title>
-                                <p>{story.location}</p>
-                                <p>{story.startTime} to {story.endTime}</p>
-                            </Timeline.Item>
-                        ))
-                    }
-                </Timeline>
+                <Row>
+                    <Col span={16} offset={4}>
+                        <Timeline mode='left' style={{ margin: '20px 0px' }}>
+                            {
+                                stories.map((story, index) => (
+                                    <Timeline.Item key={index} dot={<ClockCircleOutlined onClick={() => console.log(index + 1)} style={{ fontSize: '16px' }} />} label={story.date}>
+                                        <Title level={4}>{story.task}</Title>
+                                        <p>{story.location}</p>
+                                        <p>{story.startTime} to {story.endTime}</p>
+                                    </Timeline.Item>
+                                ))
+                            }
+                        </Timeline>
+                    </Col>
+                    <Col style={{ margin: '20px 0px' }} span={2} offset={2}>
+                        <Button onClick={generatePdf} type="primary" icon={<DownloadOutlined />} size='large'>
+                            Generate PDF
+                        </Button>
+                    </Col>
+                </Row>
             )
         } else {
             return (
