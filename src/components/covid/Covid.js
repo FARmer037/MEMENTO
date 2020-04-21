@@ -3,10 +3,11 @@ import axios from 'axios'
 import './Covid.css'
 import CovidCard from './CovidCard'
 import { SUBSCRIPTION_KEY } from '../../environment'
-import { Input, Row, Col, Typography } from 'antd';
+import { Row, Col, Typography, Button } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import Autocomplete from 'react-autocomplete'
 
 const { Title } = Typography;
-const { Search } = Input;
 
 const Covid = () => {
     const [globalStats, setGlobalStats] = useState({
@@ -33,7 +34,6 @@ const Covid = () => {
         }
 
         const result = await axios.get(url, config)
-        // console.log(result.data)
         setGlobalStats({
             totalConfirmedCases: result.data.stats.totalConfirmedCases,
             newlyConfirmedCases: result.data.stats.newlyConfirmedCases,
@@ -47,20 +47,29 @@ const Covid = () => {
 
     const getCountryCode = async () => {
         const result = await axios.get(`http://restcountries.eu/rest/v2/`)
-        // console.log(result.data)
         setCountries(result.data)
     }
 
     const chooseCountry = () => {
-        // console.log(search)
         const country = countries.filter(c => c.name === search);
-        // console.log(...c)
         covertToCountryCode(...country)
     }
 
     const covertToCountryCode = (country) => {
-        // console.log(c.alpha2Code)
         !country || search === '' ? setCountryCode('global') : setCountryCode(country.alpha2Code)
+    }
+
+    const renderMovieTitle = (state, val) => {
+        return (
+            state.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
+        );
+    }
+
+    const showLabel = () => {
+        if (search) 
+            return search
+        else
+            return 'Glabal'
     }
 
     useEffect(() => {
@@ -73,7 +82,36 @@ const Covid = () => {
             <Row>
                 <Col span={12} offset={6} >
                     <Title style={{ textAlign: 'center', margin: '20px 0' }}>Covid-19 Stats</Title>
-                    <Search placeholder="e.g. Thailand, Japan, Italy" onChange={e => setSearch(e.target.value)} onSearch={chooseCountry} enterButton />
+                    <div className='search-box'>
+                        <dvi className='autocomplete-wrapper'>
+                            <Autocomplete
+                                value={search}
+                                items={countries}
+                                getItemValue={item => item.name}
+                                shouldItemRender={renderMovieTitle}
+                                renderMenu={item => (
+                                    <div className="dropdown">
+                                        {item}
+                                    </div>
+                                )}
+                                renderItem={(item, isHighlighted) =>
+                                    <div className={`item ${isHighlighted ? 'selected-item' : ''}`}>
+                                        {item.name}
+                                    </div>
+                                }
+                                onChange={(event, val) => setSearch(val)}
+                                onSelect={val => setSearch(val)}
+                            />
+                        </dvi>
+                        <Button type="primary" icon={<SearchOutlined />} onClick={chooseCountry}>
+                            Search
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={12} offset={6}>
+                    <Title level={2} type="secondary" style={{ textAlign: 'center', margin: '20px 0' }}>- {showLabel()} -</Title>
                 </Col>
             </Row>
             <Row>
