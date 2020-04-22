@@ -3,7 +3,7 @@ import axios from 'axios'
 import './Covid.css'
 import CovidCard from './CovidCard'
 import { SUBSCRIPTION_KEY } from '../../environment'
-import { Row, Col, Typography, Button } from 'antd';
+import { Row, Col, Typography, Button, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Autocomplete from 'react-autocomplete'
 
@@ -56,10 +56,15 @@ const Covid = () => {
     }
 
     const covertToCountryCode = (country) => {
-        !country || search === '' ? setCountryCode('global') : setCountryCode(country.alpha2Code)
+        if(!country) {
+            message.error('Country not found')
+        }
+        else {
+            search === '' ? setCountryCode('global') : setCountryCode(country.alpha2Code)
+        }
     }
 
-    const renderMovieTitle = (state, val) => {
+    const renderCountryName = (state, val) => {
         return (
             state.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
         );
@@ -88,7 +93,7 @@ const Covid = () => {
                                 value={search}
                                 items={countries}
                                 getItemValue={item => item.name}
-                                shouldItemRender={renderMovieTitle}
+                                shouldItemRender={renderCountryName}
                                 renderMenu={item => (
                                     <div className="dropdown">
                                         {item}

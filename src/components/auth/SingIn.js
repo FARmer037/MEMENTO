@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Form, Input, Button, Typography } from 'antd'
+import { Row, Col, Form, Input, Button, Typography, message } from 'antd'
 import fire from '../../firebase/fire'
 
 const { Title } = Typography
@@ -17,13 +17,12 @@ const SignIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onFinish = values => {
-        // console.log('Success:', values);
-
+    const onFinish = () => {
         fire.auth().signInWithEmailAndPassword(email, password).then(u => {
             console.log(u)
         }).catch(err => {
             console.log(err)
+            message.error(err.message);
         })
 
     };
