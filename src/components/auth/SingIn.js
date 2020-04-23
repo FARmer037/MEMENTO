@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Row, Col, Form, Input, Button, Typography, message } from 'antd'
 import fire from '../../firebase/fire'
+import firebase from 'firebase'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 const { Title } = Typography
 
@@ -13,9 +15,21 @@ const tailLayout = {
     wrapperCol: { offset: 11, span: 12 },
 }
 
+const facebookBtnLayout = {
+    wrapperCol: { offset: 6, span: 12 },
+}
+
 const SignIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const uiConfig = {
+        signInFlow: 'popup',
+        signInSuccessUrl: '/',
+        signInOptions: [
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID
+        ]
+    };
 
     const onFinish = () => {
         fire.auth().signInWithEmailAndPassword(email, password).then(u => {
@@ -73,6 +87,10 @@ const SignIn = () => {
                         <Button type="primary" htmlType="submit">
                             Sign In
                         </Button>
+                    </Form.Item>
+
+                    <Form.Item {...facebookBtnLayout} >
+                        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
                     </Form.Item>
                 </Form>
             </Col>
