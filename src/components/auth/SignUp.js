@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Row, Col, Form, Input, Button, Typography } from 'antd'
+import { Row, Col, Form, Input, Button, Typography, message } from 'antd'
 import fire from '../../firebase/fire'
+import { useHistory } from 'react-router-dom';
 
 const { Title } = Typography
 
@@ -14,16 +15,15 @@ const tailLayout = {
 }
 
 const SignUp = () => {
+    const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const onFinish = values => {
-        // console.log('Success:', values);
-
         fire.auth().createUserWithEmailAndPassword(email, password).then(u => {
-            console.log(u)
+            history.push('/')
         }).catch(err => {
-            console.log(err)
+            message.error(err.message);
         })
     };
 
