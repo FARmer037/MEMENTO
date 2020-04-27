@@ -23,7 +23,7 @@ const Covid = () => {
     const [countryCode, setCountryCode] = useState('global')
     const [countries, setCountries] = useState([])
 
-    const url = `/coronavirus/stats/${countryCode}`
+    const url = `https://api.smartable.ai/coronavirus/stats/${countryCode}`
 
     const getCovidStats = async () => {
         let config = {
@@ -46,7 +46,7 @@ const Covid = () => {
     }
 
     const getCountryCode = async () => {
-        const result = await axios.get(`http://restcountries.eu/rest/v2/`)
+        const result = await axios.get(`https://restcountries.eu/rest/v2/`)
         setCountries(result.data)
     }
 
